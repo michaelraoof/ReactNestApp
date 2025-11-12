@@ -1,22 +1,28 @@
-import { useEffect } from 'react';
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import { useUserStore } from './stores/store'; // Fix this import
+import { type JSX } from "react";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { useUserStore } from "./stores/store";
 
-import SignUp from './pages/Signup';
+import SignUp from "./pages/Signup";
+import Home from "./pages/Home";
+import SignIn from "./pages/SignIn";
 
-
-
+function Protected({ children }: { children: JSX.Element }) {
+  const token = useUserStore((state) => state.token);
+  return token ? children : <Navigate to="/signup" replace />;
+}
 export default function AppRouter() {
-  const token = useUserStore((s) => s.token); // Fix this
-  const loadProfile = useUserStore((s) => s.loadProfile); // Fix this
-
-  useEffect(() => {
-    if (token) loadProfile();
-  }, [token, loadProfile]);
-
   return (
     <BrowserRouter>
       <Routes>
+        <Route
+          path="/"
+          element={
+            <Protected>
+              <Home />
+            </Protected>
+          }
+        />
+        <Route path="/signin" element={<SignIn />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="*" element={<Navigate to="/signup" replace />} />
       </Routes>

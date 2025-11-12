@@ -1,6 +1,11 @@
 import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
-import type { AuthReq, SignUpData, User } from "../interfaces/user.interface";
+import type {
+  AuthReq,
+  SignUpData,
+  User,
+  SignInData,
+} from "../interfaces/user.interface";
 import { Api } from "../api";
 
 interface AuthState {
@@ -11,6 +16,7 @@ interface AuthState {
 }
 
 interface UserActions {
+  signIn: (data: SignInData) => Promise<void>;
   signUp: (data: SignUpData) => Promise<void>;
   loadProfile: () => Promise<void>;
   signOut: () => void;
@@ -26,6 +32,23 @@ export const useUserStore = create<AuthState & UserActions>()(
       apiErr: null,
 
       clearError: () => set({ apiErr: null }),
+      signIn: async (data) => {
+        set({ loading: true, apiErr: null });
+
+        try {
+          const res: AuthReq = await Api.signIn(data);
+          set({ user: res.user, token: res.token, loading: false });
+        } catch (e) {
+          const err = e as { response?: { data?: { message?: string } } };
+          console.log(err.response?.data?.message);
+          set({
+            apiErr: err?.response?.data?.message ?? "error while sign in",
+            loading: false,
+          });
+
+          throw e;
+        }
+      },
       signUp: async (data) => {
         set({ loading: true, apiErr: null });
         try {
@@ -45,6 +68,7 @@ export const useUserStore = create<AuthState & UserActions>()(
         set({ loading: true, apiErr: null });
         try {
           const profile = await Api.getUserData();
+
           set({ user: profile, loading: false });
         } catch {
           set({ loading: false });
