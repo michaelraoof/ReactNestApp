@@ -1,5 +1,5 @@
 import { type FormEvent, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { Mail, User, Lock } from "lucide-react";
 import { useSignup } from "../hooks/useSignup";
 import { useUserStore } from "../stores/store";
@@ -43,6 +43,17 @@ export default function SignUp() {
         <FormLayout
           title="Create your account"
           subtitle="Start creating amazing e-learning content"
+          footer={
+            <div className="text-center text-sm text-slate-600">
+              already have an account?{" "}
+              <Link
+                to="/signin"
+                className=" text-orange-500  hover:text-orange-700 font-medium  transition-colors"
+              >
+                Sign In
+              </Link>
+            </div>
+          }
         >
           <form onSubmit={handleSubmit} className=" space-y-4">
             <Inputform
