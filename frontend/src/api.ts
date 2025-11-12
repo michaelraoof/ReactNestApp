@@ -1,5 +1,10 @@
 import axios from "axios";
-import type { AuthReq, SignUpData, User } from "./interfaces/user.interface";
+import type {
+  AuthReq,
+  SignUpData,
+  User,
+  SignInData,
+} from "./interfaces/user.interface";
 
 const api = axios.create({
   baseURL: import.meta.env.VITE_API_URL,
@@ -23,6 +28,10 @@ api.interceptors.request.use((config) => {
 });
 
 export const Api = {
+  async signIn(payload: SignInData): Promise<AuthReq> {
+    const { data } = await api.post<AuthReq>("/auth/signin", payload);
+    return data;
+  },
   async signUp(payload: SignUpData): Promise<AuthReq> {
     const { data } = await api.post<AuthReq>("/auth/signup", payload);
     return data;
