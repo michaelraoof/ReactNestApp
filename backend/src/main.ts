@@ -45,6 +45,8 @@ async function bootstrap() {
     //swagger should be disabled in production
     SwaggerModule.setup('/api', app, document, {
       swaggerOptions: { persistAuthorization: true },
+      customCssUrl:
+        'https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.1.0/swagger-ui.min.css',
     });
   }
   await app.listen(process.env.PORT ?? 3000);
