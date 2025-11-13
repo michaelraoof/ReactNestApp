@@ -8,7 +8,13 @@ production-ready and adhere to industry best practices for both front-end and ba
 - Auth: JWT
 - API Docs: Swagger
 
-  Front End Deployment: https://easygenerator-fe-michael.vercel.app/
+## Front End Deployment:
+
+https://easygenerator-fe-michael.vercel.app/
+
+## Swagger API Documentation
+
+https://easygenerator-be.vercel.app/api
 
 ## Screenshots
 
