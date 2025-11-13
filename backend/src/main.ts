@@ -22,7 +22,7 @@ async function bootstrap() {
     }),
   );
 
-  if (process.env.NODE_ENV === 'development') {
+  if (process.env.ENABLE_SWAGGER === 'true') {
     const config = new DocumentBuilder()
       .setTitle('EasyGenerator nestjs backend docs')
       .setDescription('EasyGenerator nestjs backend docs')
