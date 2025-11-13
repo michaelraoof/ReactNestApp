@@ -1,7 +1,30 @@
 {
     "version": 2,
-    "rewrites": [
-      { "source": "/api", "destination": "/api" },
-      { "source": "/api/(.*)", "destination": "/api" }
-    ]
+   "rewrites": [
+        {
+          "source": "/api/(.*)",
+          "destination": "/api/"
+        },
+        {
+          "source": "/swagger-ui-bundle.js",
+          "destination": "/node_modules/swagger-ui-dist/swagger-ui-bundle.js"
+        },
+        {
+          "source": "/swagger-ui-standalone-preset.js",
+          "destination": "/node_modules/swagger-ui-dist/swagger-ui-standalone-preset.js"
+        },
+        {
+          "source": "/swagger-ui.css",
+          "destination": "/node_modules/swagger-ui-dist/swagger-ui.css"
+        },
+        {
+          "source": "/favicon-32x32.png",
+          "destination": "/node_modules/swagger-ui-dist/favicon-32x32.png"
+        },
+        {
+          "source": "/favicon-16x16.png",
+          "destination": "/node_modules/swagger-ui-dist/favicon-16x16.png"
+        }
+      ]
+   
   }
