@@ -22,30 +22,36 @@ async function bootstrap() {
     }),
   );
 
-  const config = new DocumentBuilder()
-    .setTitle('EasyGenerator nestjs backend docs')
-    .setDescription('EasyGenerator nestjs backend docs')
-    .setVersion(VERSION)
-    .addBearerAuth(
-      {
-        type: 'http',
-        scheme: 'bearer',
-        bearerFormat: 'JWT',
-        in: 'header',
-        name: 'Authorization',
-      },
-      'access-token',
-    )
-    .addTag('auth')
-    .addTag('users')
-    .build();
+  if (process.env.NODE_ENV === 'development') {
+    const config = new DocumentBuilder()
+      .setTitle('EasyGenerator nestjs backend docs')
+      .setDescription('EasyGenerator nestjs backend docs')
+      .setVersion(VERSION)
+      .addBearerAuth(
+        {
+          type: 'http',
+          scheme: 'bearer',
+          bearerFormat: 'JWT',
+          in: 'header',
+          name: 'Authorization',
+        },
+        'access-token',
+      )
+      .addTag('auth')
+      .addTag('users')
+      .build();
 
-  const document = SwaggerModule.createDocument(app, config);
-  //swagger should be disabled in production
-  SwaggerModule.setup('/api', app, document, {
-    swaggerOptions: { persistAuthorization: true },
-  });
-
+    const document = SwaggerModule.createDocument(app, config);
+    //swagger should be disabled in production
+    SwaggerModule.setup('/api', app, document, {
+      customCssUrl: `https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/5.0.1/swagger-ui.min.css`,
+      customJs: [
+        `https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/5.0.1/swagger-ui-bundle.min.js`,
+        `https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/5.0.1/swagger-ui-standalone-preset.min.js`,
+      ],
+      swaggerOptions: { persistAuthorization: true },
+    });
+  }
   await app.listen(process.env.PORT ?? 3000);
 }
 bootstrap();
