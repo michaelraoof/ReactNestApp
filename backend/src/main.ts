@@ -22,7 +22,7 @@ async function bootstrap() {
     }),
   );
 
-  if (process.env.ENABLE_SWAGGER === 'true') {
+  if (process.env.NODE_ENV === 'development') {
     const config = new DocumentBuilder()
       .setTitle('EasyGenerator nestjs backend docs')
       .setDescription('EasyGenerator nestjs backend docs')
@@ -44,11 +44,6 @@ async function bootstrap() {
     const document = SwaggerModule.createDocument(app, config);
     //swagger should be disabled in production
     SwaggerModule.setup('/api', app, document, {
-      customCssUrl: `https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/5.0.1/swagger-ui.min.css`,
-      customJs: [
-        `https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/5.0.1/swagger-ui-bundle.min.js`,
-        `https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/5.0.1/swagger-ui-standalone-preset.min.js`,
-      ],
       swaggerOptions: { persistAuthorization: true },
     });
   }
